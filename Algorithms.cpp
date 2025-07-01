@@ -186,7 +186,7 @@ Graph Algorithms::dijkstra(const Graph& g, int start) {
     return result;
 }
 
-// --- Prim ---
+//Prim
 
 Graph Algorithms::prim(const Graph& g) {
     int n = g.getVertices();
@@ -246,7 +246,7 @@ Graph Algorithms::prim(const Graph& g) {
     return result;
 }
 
-// --- Kruskal ---
+// Kruskal
 
 struct Edge {
     int u, v, w;
@@ -256,14 +256,13 @@ Graph Algorithms::kruskal(const Graph& g) {
     int n = g.getVertices();
     UnionFind uf(n);
 
-    // יוצרים מערך של קשתות מתוך הגרף
     std::vector<Edge> edges;
 
     for (int u = 0; u < n; ++u) {
         for (auto& neighbor : g.getNeighbors(u)) {
             int v = neighbor.first;
             int w = neighbor.second;
-            if (u < v) { // כדי למנוע הכפלה (הגרף לא מכוון)
+            if (u < v) { 
                 edges.push_back({u, v, w});
             }
         }
