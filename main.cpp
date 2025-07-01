@@ -17,6 +17,15 @@ int main() {
     g.addEdge(3, 4, 2);
     g.addEdge(4, 5, 6);
     g.addEdge(0, 3, 1);
+
+    Graph p(6);
+    g.addEdge(0, 1, 4);
+    g.addEdge(0, 2, 2);
+    g.addEdge(1, 2, 1);
+    g.addEdge(1, 3, 2);
+    g.addEdge(2, 3, 4);
+    g.addEdge(3, 4, 2);
+    g.addEdge(4, 5, 6);
     
 
     std::cout << "Original Graph:" << std::endl;
@@ -37,8 +46,12 @@ int main() {
     std::cout << "\nDFS tree from vertex 0:" << std::endl;
     dfsGraph.print_graph();
 
-    // דייקסטרה - דרכי הקצרות מ-0
+    // דייקסטרה
     Graph dijkstraGraph = Algorithms::dijkstra(g, 0);
+    std::cout << "\nDijkstra shortest paths from vertex 0:" << std::endl;
+    dijkstraGraph.print_graph();
+
+    Graph dijkstraGraph2 = Algorithms::dijkstra(p, 0);
     std::cout << "\nDijkstra shortest paths from vertex 0:" << std::endl;
     dijkstraGraph.print_graph();
 

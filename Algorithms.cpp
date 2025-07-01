@@ -116,7 +116,7 @@ Graph Algorithms::dfs(const Graph& g, int start) {
     return result;
 }
 
-// --- Dijkstra ---
+//Dijkstra
 
 Graph Algorithms::dijkstra(const Graph& g, int start) {
     int n = g.getVertices();
@@ -124,15 +124,19 @@ Graph Algorithms::dijkstra(const Graph& g, int start) {
     int* prev = new int[n];
     bool* visited = new bool[n]();
 
+
     for (int i = 0; i < n; ++i) {
         dist[i] = std::numeric_limits<int>::max();
         prev[i] = -1;
     }
     dist[start] = 0;
 
+ 
     for (int i = 0; i < n; ++i) {
         int u = -1;
         int minDist = std::numeric_limits<int>::max();
+
+        
         for (int j = 0; j < n; ++j) {
             if (!visited[j] && dist[j] < minDist) {
                 minDist = dist[j];
@@ -143,6 +147,7 @@ Graph Algorithms::dijkstra(const Graph& g, int start) {
         if (u == -1) break;
         visited[u] = true;
 
+      
         for (auto& neighbor : g.getNeighbors(u)) {
             int v = neighbor.first;
             int w = neighbor.second;
@@ -154,29 +159,30 @@ Graph Algorithms::dijkstra(const Graph& g, int start) {
         }
     }
 
+   
     Graph result(n);
     for (int i = 0; i < n; ++i) {
         if (prev[i] != -1) {
-            result.addEdge(prev[i], i, g.getNeighbors(prev[i])[0].second);
-            // לא תמיד הגרף הוא כיווני, ולכן משתמשים במשקל המקורי
-            // אפשר לשפר את החלק הזה במידה ויש פונקציה לקבלת משקל ישיר
-            // אבל כרגע, נוסיף את הקשת עם המשקל מהגרף המקורי.
-            // כדי לקבל את המשקל המדויק, נעבור על השכנים של prev[i] ונמצא את i
-            // נממש את זה פה:
-            int weight = 0;
+            int minWeight = std::numeric_limits<int>::max();
+
+            
             for (auto& nbr : g.getNeighbors(prev[i])) {
-                if (nbr.first == i) {
-                    weight = nbr.second;
-                    break;
+                if (nbr.first == i && nbr.second < minWeight) {
+                    minWeight = nbr.second;
                 }
             }
-            result.addEdge(prev[i], i, weight);
+
+            if (minWeight != std::numeric_limits<int>::max()) {
+                result.addEdge(prev[i], i, minWeight);
+            }
         }
     }
 
+    
     delete[] dist;
     delete[] prev;
     delete[] visited;
+
     return result;
 }
 
